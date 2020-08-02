@@ -1,23 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import {register} from '../../actions/auth'
+import {connect} from 'react-redux'
 
-const Register = (props) => {
+const Register = ({register}) => {
    const [formData, setFormData] = useState({
       name: '',
       email: '',
-      password1: '',
+      password: '',
       password2: '',
    });
 
-   const { name, email, password1, password2 } = formData;
+   const { name, email, password, password2 } = formData;
 
    const onChange = (e) =>
       setFormData({ ...formData, [e.target.name]: e.target.value });
    const onSubmit = (e) => {
       e.preventDefault();
-      // Add in redux later
-      console.log(formData);
+      //Set alerts later
+      //   if(password1 !== password2)
+      register({name, email, password})
    };
 
    return (
@@ -38,9 +41,9 @@ const Register = (props) => {
                placeholder="Email"
             ></input>
             <input
-               name="password1"
+               name="password"
                type="password"
-               value={password1}
+               value={password}
                onChange={(e) => onChange(e)}
                placeholder="Password"
             ></input>
@@ -57,6 +60,8 @@ const Register = (props) => {
    );
 };
 
-Register.propTypes = {};
+Register.propTypes = {
+    register:PropTypes.func.isRequired,
+};
 
-export default Register;
+export default connect(null, {register})(Register);

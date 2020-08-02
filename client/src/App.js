@@ -5,11 +5,15 @@ import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing'
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import {Provider} from 'react-redux'
+import store from './store'
+
 
 
 function App() {
   return (
     <div className="App">
+      <Provider store={store}>
       <Router>
       <Navbar />
       <Switch>
@@ -18,6 +22,7 @@ function App() {
         <Route exact path='/register' component={Register} />
       </Switch>
       </Router>
+      </Provider>
     </div>
   );
 }
