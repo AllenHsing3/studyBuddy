@@ -120,7 +120,7 @@ router.post(
    }
 );
 
-// @route    GET user/register
+// @route    GET user/
 // @desc     Register User
 // @access   Public
 router.get('/', auth, async (req, res) => {
