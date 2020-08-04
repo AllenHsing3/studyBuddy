@@ -67,10 +67,10 @@ router.post(
    }
 );
 
-// @route    POST user/login
+// @route    GET user/login
 // @desc     Login User
 // @access   Public
-router.post(
+router.get(
    '/login',
    [
       check('email', 'Please enter valid email').isEmail(),
