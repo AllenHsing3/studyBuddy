@@ -67,10 +67,10 @@ router.post(
    }
 );
 
-// @route    GET user/login
+// @route    POST user/login
 // @desc     Login User
 // @access   Public
-router.get(
+router.post(
    '/login',
    [
       check('email', 'Please enter valid email').isEmail(),
@@ -121,11 +121,11 @@ router.get(
 );
 
 // @route    GET user/
-// @desc     Register User
+// @desc     Get user
 // @access   Public
 router.get('/', auth, async (req, res) => {
    try {
-      const user = await User.findById(req.user.id);
+      const user = await User.findById(req.user.id).select('-password');
       res.json(user);
    } catch (err) {
       console.error(err.message);

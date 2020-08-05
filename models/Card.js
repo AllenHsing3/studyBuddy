@@ -5,7 +5,7 @@ const CardSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
    },
-   category: {
+   categoryName: {
       type: String,
       required: true,
    },

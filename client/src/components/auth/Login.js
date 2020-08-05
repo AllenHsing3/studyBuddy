@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import {login} from '../../actions/auth'
+import {connect} from 'react-redux'
+import { Redirect } from 'react-router-dom';
 
-const Login = (props) => {
+const Login = ({login, isAuthenticated}) => {
    const [formData, setFormData] = useState({
       email: '',
-      password1: '',
+      password: '',
    });
 
-   const { email, password1 } = formData;
+   const { email, password } = formData;
 
    const onChange = (e) =>
       setFormData({ ...formData, [e.target.name]: e.target.value });
 
    const onSubmit = (e) => {
       e.preventDefault();
-      //Add in redux action here
-      console.log(formData);
+      login(email, password)
    };
+
+   if(isAuthenticated) return <Redirect to='/dashboard'/>
 
    return (
       <div>
@@ -29,9 +33,9 @@ const Login = (props) => {
                placeholder="Email"
             ></input>
             <input
-               name="password1"
+               name="password"
                type="password"
-               value={password1}
+               value={password}
                onChange={(e) => onChange(e)}
                placeholder="Password"
             ></input>
@@ -41,6 +45,13 @@ const Login = (props) => {
    );
 };
 
-Login.propTypes = {};
+Login.propTypes = {
+   login: PropTypes.func.isRequired,
+   isAuthenticated: PropTypes.bool.isRequired,
+};
 
-export default Login;
+const mapStateToProps = state => ({
+   isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, {login})(Login);

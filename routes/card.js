@@ -7,11 +7,11 @@ const { check, validationResult } = require('express-validator');
 const router = express.Router();
 
 // @route    GET card/
-// @desc     Get current user's cards
+// @desc     Get all user's categories
 // @access   Private
 router.get('/', auth, async (req, res) => {
    try {
-      const cards = await Card.findById(req.user.id);
+      const cards = await Card.find({userId:req.user.id});
       if (!cards) {
          return res.status(400).json({ msg: "You don't have any cards" });
       }
@@ -29,7 +29,7 @@ router.post('/category', auth, async (req, res) => {
     try {
         const newCategory = new Card({
             userId: req.user.id,
-            category: req.body.category,
+            categoryName: req.body.categoryName,
 
         })
         await newCategory.save();
