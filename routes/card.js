@@ -79,8 +79,20 @@ router.post('/category/:id', auth, async(req, res) => {
     }
 })
 
-// @route    DELETE card/category/:id
+// @route    DELETE card/category/:id/:card_id
 // @desc     Delete Card
 // @access   Private
+router.delete('/category/:id/:card_id', auth, async(req, res) => {
+    try {
+        const category = await Card.findById({_id:req.params.id})
+        const removeIndex = category.cards.findIndex(card => card._id === req.params.card_id)
+        category.cards.splice(removeIndex, 1)
+        await category.save()
+        res.json(category)
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).send('Server Error')
+    }
+})
 
 module.exports = router;
