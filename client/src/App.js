@@ -11,6 +11,8 @@ import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './actions/auth';
+import EditCategory from './components/dashboard/editCategory/EditCategory';
+import Study from './components/dashboard/study/Study';
 
 if(localStorage.token){
   setAuthToken(localStorage.token)
@@ -31,6 +33,8 @@ const App = () => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path='/editDeck/:_id' component={EditCategory} />
+            <Route exact path='/study/:_id' component={Study} />
           </Switch>
         </Router>
       </Provider>

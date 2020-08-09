@@ -13,11 +13,11 @@ const CardSchema = new mongoose.Schema({
       {
          front: {
             type: String,
-            required: true,
+            // required: true,
          },
          back: {
             type: String,
-            required: true,
+            // required: true,
          },
          markedForDeletion: {
             type: Boolean,
