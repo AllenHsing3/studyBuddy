@@ -4,6 +4,13 @@ import { setAlert } from '../../actions/alert';
 import {connect} from 'react-redux'
 import { createCategory } from '../../actions/category';
 
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography'
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+
 const NewCategory = ({text, setAlert, createCategory}) => {
     const [newCategory, setNewCategory] = useState('');
     const onChange = e => setNewCategory(e.target.value)
@@ -13,21 +20,22 @@ const NewCategory = ({text, setAlert, createCategory}) => {
              setAlert('Please enter a deck name', 'danger')
         } else {
             createCategory(newCategory)
+            setNewCategory('')
         }
     }
   
   return (
-    <div>
+    <Container align='center'>
       <form onSubmit={(e) => onSubmit(e)}>
-        <label>{text}</label>
-        <input
+        <Typography>{text}</Typography>
+        <TextField
           type="text"
           value={newCategory}
           onChange={(e) => onChange(e)}
-        ></input>
-        <button type="submit">+</button>
+        ></TextField>
+        <Button type="submit"><AddCircleIcon /></Button>
       </form>
-    </div>
+    </Container>
   );
 };
 

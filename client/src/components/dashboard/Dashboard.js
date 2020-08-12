@@ -6,6 +6,23 @@ import Spinner from '../layout/Spinner';
 import Category from './Category';
 import NewCategory from './NewCategory';
 
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    justifyContent: 'center',
+  },
+  paper: {
+    marginTop: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+}));
+
 const Dashboard = ({
   loadAllCategories,
   category: { categories, loading },
@@ -13,29 +30,38 @@ const Dashboard = ({
   useEffect(() => {
     loadAllCategories();
   }, []);
+  const classes = useStyles();
   const [renderForm, toggleForm] = useState(false);
   return (
     <div>
-        
-      <h1>Welcome to your dashboard!</h1>
-      {categories.length == 0 && !loading && (
+      {categories.length == 0 && !loading ? (
         <NewCategory text={"Let's get started! Please make your first deck:"} />
+      ) : (
+        <Grid className={classes.paper} container justify="center">
+          {renderForm == false ? (
+            <Button
+              color="primary"
+              style={{ justifyContent: 'center' }}
+              onClick={() => toggleForm(!renderForm)}
+            >
+              Add Deck
+            </Button>
+          ) : (
+            <NewCategory text={''} />
+          )}
+        </Grid>
       )}
       <div>
         {loading ? (
           <Spinner />
         ) : (
-          <Fragment>
-            {categories.map((categories) => (
-              <Category key={categories._id} categories={categories} />
-            ))}
-            <div>
-            <button onClick={() => toggleForm(!renderForm)}>
-              Add new deck
-            </button>
-            {renderForm && <NewCategory text={'Create a new deck:'} />}
-            </div>
-          </Fragment>
+          <Container className={classes.cardGrid} maxWidth="md">
+            <Grid container spacing={4}>
+              {categories.map((categories) => (
+                <Category key={categories._id} categories={categories} />
+              ))}
+            </Grid>
+          </Container>
         )}
       </div>
     </div>
@@ -51,4 +77,4 @@ const mapStateToProps = (state) => ({
   category: state.category,
 });
 
-export default connect(mapStateToProps, { loadAllCategories, })(Dashboard);
+export default connect(mapStateToProps, { loadAllCategories })(Dashboard);

@@ -81,7 +81,7 @@ router.post('/category/:id', auth, async (req, res) => {
       front: req.body.front,
       back: req.body.back,
     };
-    category.cards.push(newCard);
+    category.cards.unshift(newCard);
     category.save();
     res.json(category);
   } catch (err) {
